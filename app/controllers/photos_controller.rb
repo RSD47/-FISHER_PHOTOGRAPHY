@@ -1,4 +1,5 @@
 class PhotosController < ApplicationController
+  before_action :set_task, only: %i[show edit update destroy]
 
   def index
     @photos = Photo.all
