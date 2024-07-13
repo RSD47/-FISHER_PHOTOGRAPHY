@@ -1,6 +1,18 @@
 <div class="container">
   <div class="collect-title">Collections</div>
   <div class="collect-grid">
-    <div></div>
+    <div>
+      <% @collections.each do |collection| %>
+        <div id="carousel<%= collection.id %>" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <%= collection.photos.each_with_index do |photo, index| %>
+              <div class="carousel-item <%= 'active' if index.zero? %>">
+                <%= cl_image_tag photo.key, class: "d-block h-100 w-100 img-fluid" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

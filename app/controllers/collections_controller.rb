@@ -1,4 +1,6 @@
 class CollectionsController < ApplicationController
+  # before_action :set_collection, only: %i[edit update]
+
   def index
     @collections = Collection.all
   end
@@ -8,18 +10,18 @@ class CollectionsController < ApplicationController
   end
 
   def create
-    @collection = Colection.new(collection_params)
+    @collection = Collection.new(collection_params)
 
     if @collection.save
-      redirect_to collections_path, notice: "Task created"
+      redirect_to collections_path, notice: "Collection created"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   private
 
-  def collection_parasm
-    params.require(:collection).permit(:season, :match)
+  def collection_params
+    params.require(:collection).permit(:season, :match, photos: [])
   end
 end
