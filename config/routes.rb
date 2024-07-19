@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   # resources :users do
   #   resources :photos
   # end
-  resources :collections do
-    resources :photos
-  end
+
+  resources :collections
+  #   resources :photos
+  # end
 end

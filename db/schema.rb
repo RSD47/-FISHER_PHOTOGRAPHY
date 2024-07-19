@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_10_023603) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_10_023535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,8 +48,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_023603) do
     t.datetime "updated_at", null: false
     t.string "match"
     t.bigint "user_id", null: false
-    t.bigint "photo_id", null: false
-    t.index ["photo_id"], name: "index_collections_on_photo_id"
     t.index ["user_id"], name: "index_collections_on_user_id"
   end
 
@@ -78,6 +76,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_023603) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "collections", "photos"
   add_foreign_key "collections", "users"
 end

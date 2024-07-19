@@ -1,8 +1,11 @@
 class CollectionsController < ApplicationController
-  # before_action :set_collection, only: %i[edit update]
+  before_action :set_collection, only: %i[show edit update]
 
   def index
     @collections = Collection.all
+  end
+
+  def show
   end
 
   def new
@@ -10,7 +13,7 @@ class CollectionsController < ApplicationController
   end
 
   def create
-    @collection = Collection.new(collection_params)
+    @collection = current_user.collections.build(collection_params)
 
     if @collection.save
       redirect_to collections_path, notice: "Collection created"
@@ -20,6 +23,10 @@ class CollectionsController < ApplicationController
   end
 
   private
+
+  def set_collection
+    @collection = Collection.find(params[:id])
+  end
 
   def collection_params
     params.require(:collection).permit(:season, :match, photos: [])
