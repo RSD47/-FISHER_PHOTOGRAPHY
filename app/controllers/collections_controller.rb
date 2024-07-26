@@ -6,6 +6,7 @@ class CollectionsController < ApplicationController
   end
 
   def show
+    # @images = Image.all
   end
 
   def new
@@ -13,13 +14,32 @@ class CollectionsController < ApplicationController
   end
 
   def create
-    @collection = current_user.collections.build(collection_params)
+    @collection = current_user.collections.new(collection_params)
 
     if @collection.save
+      # @collection.photos.each do
+      #   Image.create
+      # end
       redirect_to collections_path, notice: "Collection created"
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def edit
+  end
+
+  def update
+    if @collection.update(collection_params)
+      redirect_to collection_path(@collection), notice: "Collection updated"
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @collection.destroy
+    redirect_to collections_path, status: :see_other, notice: "Collection deleted"
   end
 
   private

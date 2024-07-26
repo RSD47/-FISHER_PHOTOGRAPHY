@@ -3,7 +3,7 @@
     <%= simple_form_for(@collection) do |f| %>
       <%= f.input :season %>
       <%= f.input :match %>
-      <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+      <%= f.submit :photo, as: :file %>
       <%= f.submit %>
     <% end %>
   </div>

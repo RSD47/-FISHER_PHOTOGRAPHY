@@ -1,0 +1,18 @@
+.coll-card {
+  margin: 20px;
+  // border-radius: 25%;
+  height: 200px;
+  width: 315px;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+a {
+  font-display: none;
+}
+
+img {
+  object-fit: cover;
+}

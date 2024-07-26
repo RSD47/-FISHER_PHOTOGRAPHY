@@ -1,0 +1,13 @@
+<div class="container">
+  <div>
+    <h3 class="title">Pictures</h3>
+    <%= link_to "Add pictures", new_collection_image_path(@collection) %>
+  </div>
+  <div>
+    <%= @collection.images.each do |image| %>
+      <div class="p-2">
+        <%= image %>
+      </div>
+    <% end %>
+  </div>
+</div>

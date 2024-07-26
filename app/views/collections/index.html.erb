@@ -1,25 +1,14 @@
 <div class="container">
-  <div class="collect-title">Collections</div>
-  <div class="collect-grid">
-    <div>
+  <div>
+    <h3 class="title">Collections</h3>
+    <%= link_to "Add pictures", new_collection_path, class: "nav-link btn btn-outline-light outline-none me-4" %>
+  </div>
+  <div class="collect-grid d-flex justify-content-center">
+    <div class="d-flex flex-wrap">
       <% @collections.each do |collection| %>
-        <%= link_to collection_path(collection), class: "card-link" do %>
-          <div id="carousel<%= collection.id %>" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-              <%= collection.photos.each_with_index do |photo, index| %>
-                <div class="carousel-item <%= 'active' if index.zero? %>">
-                  <%= cl_image_tag photo.key, class: "d-block h-10 w-10 img-fluid" %>
-                </div>
-              <% end %>
-            </div>
-            <a class="carousel-control-prev" href="#carousel<%= collection.id %>" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carousel<%= collection.id %>" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
+        <%= link_to collection_path(collection) do %>
+          <div class="coll-card position-relative rounded-5">
+            <%= cl_image_tag photo.key, class: "d-block h-50 w-50 img-fluid" %>
           </div>
         <% end %>
       <% end %>

@@ -6,7 +6,7 @@ class User < ApplicationRecord
   # validates :email, presence: true
   # validates :password, presence: true
 
-  has_many :photos
+  # has_many :photos
   has_many :collections
-  has_many :photos, through: :collections
+  has_many :images, through: :collections
 end
