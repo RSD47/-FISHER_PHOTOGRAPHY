@@ -16,20 +16,25 @@ class ImagesController < ApplicationController
 
   def create
     @image1 = Image.build(image_params)
-    @image1.photos.each do |photo|
-    #   @images = []
-    #   @image = Image.new(image_params)
-    #   @images << @image.as_json
-    # end
-    # @images.each do |image|
-      image_params[:photos] = photo
-      @image = Image.new(image_params)
+    num = @image1.photos.count
+    num.times do |i|
+      #   @images = []
+      #   @image = Image.new(image_params)
+      #   @images << @image.as_json
+      # end
+      # @images.each do |image|
+      # params = image_params[:photos][i + 1]
+      params = ActionController::Parameters.new(collection_id: image_params[:collection_id],
+                                                photos: [image_params[:photos][i + 1]])
+      params.permit!
+      @image = Image.build(params)
       if @image.save == false
         # break
         render :new, status: :unprocessable_entity
       end
     end
-    redirect_to collection_path(@collection), notice: "Images Added"
+    # raise
+    redirect_to collection_path(@collection)
     # @image = Image.create(@images)
     # @image.collection = @collections
   end
