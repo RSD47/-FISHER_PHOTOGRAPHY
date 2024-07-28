@@ -1,11 +1,13 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: %i[show edit update destroy]
+  before_action :set_image, only: %i[show destroy]
+  before_action :set_collection, only: %i[show new create]
 
-  def index
-    @images = Image.all
-  end
+  # def index
+  #   @images = Image.all
+  # end
 
   def show
+    @image.collection = @collection
   end
 
   def new
@@ -13,27 +15,35 @@ class ImagesController < ApplicationController
   end
 
   def create
-    @image = Image.new(image_params)
-
-    @image.photos.each do
-      if @image.save
-        redirect_to root_path, notice: "Images Added"
-      else
-        render :new
+    @image1 = Image.build(image_params)
+    @image1.photos.each do |photo|
+    #   @images = []
+    #   @image = Image.new(image_params)
+    #   @images << @image.as_json
+    # end
+    # @images.each do |image|
+      image_params[:photos] = photo
+      @image = Image.new(image_params)
+      if @image.save == false
+        # break
+        render :new, status: :unprocessable_entity
       end
     end
+    redirect_to collection_path(@collection), notice: "Images Added"
+    # @image = Image.create(@images)
+    # @image.collection = @collections
   end
 
-  def edit
-  end
+  # def edit
+  # end
 
-  def update
-    if @image.update(image_params)
-      redirect_to root_path, notice: "Task updated"
-    else
-      render :edit
-    end
-  end
+  # def update
+  #   if @image.update(image_params)
+  #     redirect_to root_path, notice: "Task updated"
+  #   else
+  #     render :edit
+  #   end
+  # end
 
   def destroy
     @image.destroy
@@ -43,10 +53,14 @@ class ImagesController < ApplicationController
   private
 
   def set_image
-    @image = image.find(params[:id])
+    @image = Image.find(params[:id])
+  end
+
+  def set_collection
+    @collection = Collection.find(params[:collection_id])
   end
 
   def image_params
-    params.require(:image).permit(:photo)
+    params.require(:image).permit(:collection_id, photos: [])
   end
 end

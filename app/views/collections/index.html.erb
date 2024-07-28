@@ -1,14 +1,19 @@
-<div class="container">
+<div class="container d-flex flex-column justify-content-center">
   <div>
     <h3 class="title">Collections</h3>
     <%= link_to "Add pictures", new_collection_path, class: "nav-link btn btn-outline-light outline-none me-4" %>
   </div>
-  <div class="collect-grid d-flex justify-content-center">
+  <div class="collect-grid d-flex justify-content-start">
     <div class="d-flex flex-wrap">
       <% @collections.each do |collection| %>
         <%= link_to collection_path(collection) do %>
           <div class="coll-card position-relative rounded-5">
-            <%= cl_image_tag photo.key, class: "d-block h-50 w-50 img-fluid" %>
+            <% if collection.images.exists? %>
+              <% collection.images[0].photos.each do |photo| %>
+                <%= cl_image_tag photo.key %>
+                <% break %>
+              <% end %>
+            <% end %>
           </div>
         <% end %>
       <% end %>

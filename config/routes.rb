@@ -14,6 +14,6 @@ Rails.application.routes.draw do
   # end
 
   resources :collections do
-    resources :images, only: %i[show new delete]
+    resources :images, only: %i[show new create delete]
   end
 end

@@ -1,13 +1,15 @@
 <div class="container">
   <div>
     <h3 class="title">Pictures</h3>
-    <%= link_to "Add pictures", new_collection_image_path(@collection) %>
+    <%= link_to "Add pictures", new_collection_image_path(@collection, @image) %>
   </div>
   <div>
     <%= @collection.images.each do |image| %>
-      <div class="p-2">
-        <%= image %>
-      </div>
+      <%= image.photos.each do |photo| %>
+        <div class="p-2">
+          <%= cl_image_tag photo.key %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

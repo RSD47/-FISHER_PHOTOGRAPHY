@@ -6,7 +6,7 @@ class CollectionsController < ApplicationController
   end
 
   def show
-    # @images = Image.all
+    @image = Image.new
   end
 
   def new
@@ -49,6 +49,6 @@ class CollectionsController < ApplicationController
   end
 
   def collection_params
-    params.require(:collection).permit(:season, :match, photos: [])
+    params.require(:collection).permit(:season, :match, :photo)
   end
 end
