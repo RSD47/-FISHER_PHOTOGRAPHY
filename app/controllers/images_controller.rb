@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: %i[show destroy]
+  before_action :set_image, only: %i[show destroy download]
   before_action :set_collection, only: %i[show new create]
 
   # def index
@@ -8,6 +8,8 @@ class ImagesController < ApplicationController
 
   def show
     @image.collection = @collection
+    # @url = Cloudinary::Utils.private_download_url @image.photos[0].cloudinary_id, self.format, attachment: true
+    @image.views =+ 1
   end
 
   def new
@@ -18,25 +20,15 @@ class ImagesController < ApplicationController
     @image1 = Image.build(image_params)
     num = @image1.photos.count
     num.times do |i|
-      #   @images = []
-      #   @image = Image.new(image_params)
-      #   @images << @image.as_json
-      # end
-      # @images.each do |image|
-      # params = image_params[:photos][i + 1]
       params = ActionController::Parameters.new(collection_id: image_params[:collection_id],
                                                 photos: [image_params[:photos][i + 1]])
       params.permit!
       @image = Image.build(params)
       if @image.save == false
-        # break
         render :new, status: :unprocessable_entity
       end
     end
-    # raise
     redirect_to collection_path(@collection)
-    # @image = Image.create(@images)
-    # @image.collection = @collections
   end
 
   # def edit
@@ -53,6 +45,13 @@ class ImagesController < ApplicationController
   def destroy
     @image.destroy
     redirect_to root_path, status: :see_other, notice: "images deleted"
+  end
+
+  def download
+    # respond_to do |format|
+    #   format.png { send_data Image.to_png }
+    # Cloudinary::Utils.private_download_url @image.photos[0].id, "jpg", attachment: true
+    @image.photos[0].download
   end
 
   private

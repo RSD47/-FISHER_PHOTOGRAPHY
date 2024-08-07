@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   # end
 
   resources :collections do
-    resources :images, only: %i[show new create delete]
+    resources :images, only: %i[show new create delete] do
+      member do
+        post :download
+      end
+    end
   end
 end
